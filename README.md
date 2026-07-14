@@ -6,6 +6,20 @@ This repository will likely contain pointers to the skills I use day-to-day or t
 
 I hope you find it valuable.
 
+## Installing
+
+Perhaps you want to install one or more of my skills in a single project:
+
+```bash
+npx skills@latest add dascentral/skills
+```
+
+Or, perhaps you think my skills are basically the greatest you've ever seen. If so, you'll want to install them globally.
+
+```bash
+npx skills@latest add dascentral/skills -g
+```
+
 ## Skill Repositories
 
 - [mattpocock/skills](https://github.com/mattpocock/skills)
