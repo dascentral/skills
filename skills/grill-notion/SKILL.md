@@ -1,9 +1,9 @@
 ---
-name: grill-with-docs-from-notion
-description: Fetches a feature draft from the Notion "Features" database and hands it to /grill-with-docs for a relentless engineering interview. Use when the user wants to grill or sharpen a Notion feature before engineering begins, asks to "grill FEAT-12," "interview the design for <feature ID>," or types `/grill-with-docs-from-notion <ID>`.
+name: grill-from-notion
+description: Fetches a feature draft from the Notion "Features" database and hands it to /grill-with-docs for a relentless engineering interview. Use when the user wants to grill or sharpen a Notion feature before engineering begins or types `/grill-from-notion <ID>`.
 ---
 
-# Grill With Docs From Notion
+# Grill from Notion
 
 Fetch a feature draft from Notion and feed it to `/grill-with-docs` for a relentless interview that sharpens the design before engineering starts.
 
