@@ -1,18 +1,28 @@
 ---
 name: commit
-description: Stages and commits all pending changes with a conventional commit message. Use when the user asks to "commit these changes," "make a commit," "commit what I have," or types `/commit`. Does not push or open a PR. For push, use `commit-and-push`. For a PR, use `commit-and-pr`.
+description: Stages and commits pending changes with a conventional commit message. Use when the user asks to "commit," "commit these changes," "make a commit," types `/commit`, or when another skill needs to commit before continuing.
 ---
 
 # Commit
 
-Stage and commit the pending changes. Do not push.
+Stage and commit all pending changes. Do not push.
 
-## Workflow
+## Steps
 
-Execute **Steps 1, 2, and 3** from `../_shared/commit-workflow.md`. Stop after Step 3 — do not push.
+### 1. Review
 
-## Notes
+Run `git status` and `git diff` (staged and unstaged). Understand what changed — this drives the commit message.
 
-- Respect any existing staging. If the user has already staged specific files, skip the `git add -A` and commit only the staged set.
-- The commit message must be a conventional commit (`feat`, `fix`, `refactor`, `chore`, etc.) derived from the actual diff, not from the user's request phrasing.
-- If any step fails, stop and report what went wrong.
+### 2. Stage
+
+If specific files are already staged, keep them. Otherwise:
+
+```bash
+git add -A
+```
+
+### 3. Commit
+
+Write a conventional commit message derived from the diff — not from the user's request phrasing. Use the appropriate type (`feat`, `fix`, `refactor`, `chore`, etc.) and a concise subject. Add a short body only when the "why" isn't obvious from the subject.
+
+Done when the commit is confirmed with a SHA.
