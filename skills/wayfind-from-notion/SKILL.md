@@ -1,0 +1,34 @@
+---
+name: wayfind-from-notion
+description: Fetches a feature draft from the Notion "Features" database and hands it to /wayfinder to plan a huge chunk of work. Use when the user types `/wayfind-from-notion <ID>` or wants to thoroughly plan the development of a feature before engineering begins.
+---
+
+# Wayfind from Notion
+
+Fetch a feature draft from Notion and feed it to `/wayfinder` to plan a huge chunk of work and create a shared map of investigation tickets on the issue tracker that we then resolve one at a time until the way to the destination is clear.
+
+## Inputs
+
+- **Spec ID** — the value of the Features database's **"Spec ID"** property (e.g. `FEAT-12`). The user supplies this. If they didn't, ask for it before doing anything else.
+
+## Workflow
+
+### 1. Locate the Features database
+
+Resolve the database by name each run using `notion-search`. Never hardcode an ID or URL. If the search returns more than one plausible match, list them and ask the user which one.
+
+### 2. Fetch the draft
+
+Fetch the Features database with `notion-fetch` to get its schema and a view URL, then locate the row whose **"Spec ID"** property equals the supplied value (query the view with `notion-query-database-view`, or search for the ID string, then confirm the match). Fetch that page in full with `notion-fetch` so you have its title, properties, and all raw notes.
+
+- If no row matches, stop and tell the user the Spec ID wasn't found.
+
+### 3. Hand off to /wayfinder
+
+Invoke `/wayfinder`, passing it:
+
+- The feature's **title** and **Spec ID**
+- The full **raw notes** from the Notion page
+- Any structured properties (owner, deadline, scope) surfaced by the schema
+
+From this point, `/wayfinder` owns the session — let it drive the work.
