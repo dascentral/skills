@@ -1,6 +1,7 @@
 ---
 name: grill-from-notion
-description: Fetches a feature draft from the Notion "Features" database and hands it to /grill-with-docs for a relentless engineering interview. Use when the user wants to grill or sharpen a Notion feature before engineering begins or types `/grill-from-notion <ID>`.
+disable-model-invocation: true
+description: Fetch a Notion feature by Spec ID and grill it via /grill-with-docs.
 ---
 
 # Grill from Notion
