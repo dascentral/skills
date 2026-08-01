@@ -5,8 +5,6 @@ description: Fetches a feature draft from the Notion "Features" database and han
 
 # Wayfind from Notion
 
-Fetch a feature draft from Notion and feed it to `/wayfinder` to plan a huge chunk of work and create a shared map of investigation tickets on the issue tracker that we then resolve one at a time until the way to the destination is clear.
-
 ## Inputs
 
 - **Spec ID** — the value of the Features database's **"Spec ID"** property (e.g. `FEAT-12`). The user supplies this. If they didn't, ask for it before doing anything else.
