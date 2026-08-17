@@ -1,22 +1,6 @@
 # Skills
 
-I don't write code for a living, but it is incredibly important that I remain on top of modern engineering practices. Engineering skills are a key element of today's development workflows.
-
 This repository contains pointers to the skills I use day-to-day or that I feel engineering teams should use. It also contains a few custom skills of my own.
-
-## Installing My Skills
-
-Perhaps you want to install one or more of my skills in a single project:
-
-```bash
-npx skills@latest add dascentral/skills
-```
-
-Or, perhaps you think my skills are basically the greatest you've ever seen. If so, install them globally!
-
-```bash
-npx skills@latest add dascentral/skills -g
-```
 
 ## Skill Repositories
 
@@ -26,7 +10,15 @@ I'm tracking or using the following skills in my daily workflows.
 
 #### mattpocock/skills
 
-[mattpocock/skills](https://github.com/mattpocock/skills): [Matt Pocock](https://x.com/mattpocockuk?lang=en) teaches developers for a living and produced this set of skills. I use these skills to execute the following development workflow:
+[Matt Pocock](https://x.com/mattpocockuk?lang=en) teaches developers for a living and produced a set of skills available at [mattpocock/skills](https://github.com/mattpocock/skills). Documentation for these skills can be found on his [aihero.dev](https://www.aihero.dev/skills) website.
+
+I am primarily using Claude Code, so I install these skills as a Claude Code plugin.
+
+```bash
+claude plugins install mattpocock-skills
+```
+
+My development workflow leans heavily on these skills:
 
 - **[wayfinder](https://github.com/mattpocock/skills/blob/main/skills/engineering/wayfinder/SKILL.md)** &mdash; Plan a huge chunk of work, more than one agent session can hold, as a shared map of investigation tickets on the issue tracker, resolving them one at a time until the way to the destination is clear.
 - **[to-spec](https://github.com/mattpocock/skills/blob/main/skills/engineering/to-spec/SKILL.md)** &mdash; Turn the current conversation into a spec and publish it to the issue tracker. No interview &mdash; just synthesizes what you've already discussed.
@@ -54,3 +46,17 @@ Other skills from this batch that I would highlight:
 #### Impeccable
 
 [Impeccable](https://impeccable.style) "gives your agent the designer's vocabulary, and gives you the same commands, so you both stop guessing and start directing, live, in your production codebase."
+
+## Installing My Skills
+
+Perhaps you want to install one or more of my skills in a single project:
+
+```bash
+npx skills@latest add dascentral/skills
+```
+
+Or, perhaps you think my skills are basically the greatest you've ever seen. If so, install them globally!
+
+```bash
+npx skills@latest add dascentral/skills -g
+```

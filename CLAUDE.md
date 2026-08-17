@@ -1,19 +1,10 @@
 # Skills Repo
 
-This repo contains agent skills for use with Claude Code and other AI coding agents via the [skills CLI](https://github.com/vercel-labs/skills).
+Skills for Claude Code and other AI coding agents, installed via the [skills CLI](https://github.com/vercel-labs/skills). Each skill is one directory under `skills/` containing a `SKILL.md`.
 
-## Structure
+## Writing a Skill
 
-Skills live under `skills/`, one subdirectory per skill, each containing a `SKILL.md` file. Uncategorized until volume justifies it.
-
-## Writing Skills
-
-Each `SKILL.md` requires YAML frontmatter with `name` and `description`. The description is the only thing the agent sees when deciding whether to load the skill, so it should be specific about what the skill does and when to invoke it.
-
-A skill is a workflow, not a reference doc. Prefer steps with clear exit criteria over prose explanations.
-
-## Installing
-
-```bash
-npx skills@latest add dascentral/skills
-```
+1. Create a directory under `skills/` and add a `SKILL.md` with YAML frontmatter (`name`, `description`).
+2. The `description` is the skill's **context pointer** — the only thing the agent sees when deciding whether to load it. Write it as trigger conditions, not a summary: what the skill does and every distinct situation that should invoke it.
+3. Write the body as steps with clear exit criteria, not prose. A skill is a workflow the agent runs, not a reference doc it consults.
+4. Test by invoking the skill and checking that the agent takes the same process each run.
