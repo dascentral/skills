@@ -31,18 +31,20 @@ BASE=$(git merge-base HEAD <default-branch>)
 Capture, once:
 
 - `git log $BASE..HEAD --oneline` — the branch's commits.
-- `git diff $BASE --name-only` — changed tracked files, committed **and** uncommitted.
+- `git diff $BASE --name-only` plus `git diff --cached $BASE --name-only` — changed tracked files: committed, staged, and unstaged.
 - `git ls-files --others --exclude-standard` — untracked files that would ship if added.
 
 If all three are empty, report that there is nothing to finalize and stop. Done when `BASE` resolves and the file lists are captured.
 
 ## Step 3: Confirm `/code-review`
 
-Look in this conversation for a completed `/code-review` run against this branch. If you find one, note its one-line summary for the final report.
+`/code-review` reviews commits only (`$BASE...HEAD`). If Step 2 found staged, unstaged, or untracked changes, ask the user to commit them first — a branch with no commits can't be reviewed at all. If they decline, continue and record the unreviewed changes as a gap for the report.
 
-If you don't, ask the user whether they've run it. On **no**, invoke the `code-review` skill with `$BASE` as the fixed point and let it finish before continuing.
+Look in this conversation for a completed `/code-review` run against this branch. If you don't find one, ask the user whether they've run it. On **no**, invoke the `code-review` skill with `$BASE` as the fixed point and let it finish before continuing.
 
-Done when a `/code-review` run is confirmed — seen, user-affirmed, or just completed.
+Record the outcome: its hard violations (documented-standard breaches and spec gaps) and whether each is resolved. When the run isn't visible in this conversation, ask the user.
+
+Done when the code-review outcome is known: run confirmed, outstanding hard violations listed (or none), and any gap recorded.
 
 ## Step 4: Spawn both audits in parallel
 
@@ -62,8 +64,9 @@ Brief:
 
 > Assume this repository is **public**: anything committed is published, including content added in one commit and removed in a later one. Audit for leaked secrets and sensitive information across:
 >
-> - every commit on the branch — `git log -p $BASE..HEAD` (history, not just the final diff);
-> - uncommitted changes — `git diff HEAD`;
+> - every commit on the branch, including merge resolutions — `git log -p --cc $BASE..HEAD` (history, not just the final diff);
+> - staged changes — `git diff --cached`;
+> - unstaged changes — `git diff`;
 > - untracked files that are not gitignored.
 >
 > Hunt for:
@@ -75,7 +78,7 @@ Brief:
 > - Internal infrastructure: private hostnames, IPs, internal URLs, server paths, account or tenant IDs.
 > - Stray artifacts: database dumps, logs, `storage/` contents, `.DS_Store`, editor or debug files.
 >
-> If `gitleaks` is installed, also run `gitleaks git --log-opts="$BASE..HEAD"` and `gitleaks dir <path>` on each untracked file, and fold its hits into your review. Verify each hit — placeholder and test values (`secret`, `password`, `sk_test_...` in a test) are not findings.
+> If `gitleaks` is installed, also run `gitleaks git --log-opts="$BASE..HEAD"` and `gitleaks dir <path>` on each untracked file, and fold its hits into your review. Verify each hit: only demonstrably synthetic placeholders (`secret`, `password`, `xxxx`, a provider's documented example key) are not findings. A genuinely issued key is a finding even when it is test-mode (`sk_test_...`) or lives in a test.
 >
 > For each finding give: severity (🔴 leaked secret / 🟠 sensitive data / 🟡 hygiene), `path:line` and the commit SHA if it lives in history, what is exposed (redact the value itself), and the remediation. For anything 🔴 that is in a commit, state that the secret must be **rotated** and the history rewritten before pushing — deleting the line is not enough. Under 400 words; if clean, say so in one line.
 
@@ -83,8 +86,8 @@ Brief:
 
 Present the results under three headings, sub-agent reports verbatim or lightly cleaned:
 
-- `## Code review` — confirmed, with its one-line summary if known.
+- `## Code review` — the recorded outcome, outstanding hard violations, and any gap.
 - `## Laravel best practices`
 - `## Secrets`
 
-End with a one-line verdict: **Ready for `/pr`** when there are no 🔴 findings in either audit; otherwise **Not ready**, naming the blocking findings. Then stop and wait for the user.
+End with a one-line verdict: **Ready for `/pr`** when neither audit has a 🔴 finding and `/code-review` has no outstanding hard violations; otherwise **Not ready**, naming the blockers. Append any gap from Step 3. Then stop and wait for the user.
