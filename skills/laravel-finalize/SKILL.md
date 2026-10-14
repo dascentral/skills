@@ -38,9 +38,9 @@ If all three are empty, report that there is nothing to finalize and stop. Done 
 
 ## Step 3: Confirm `/code-review`
 
-`/code-review` reviews commits only (`$BASE...HEAD`). If Step 2 found staged, unstaged, or untracked changes, ask the user to commit them first — a branch with no commits can't be reviewed at all. If they decline, continue and record the unreviewed changes as a gap for the report.
+`/code-review` reviews commits only (`$BASE...HEAD`). If Step 2 found staged, unstaged, or untracked changes, ask the user to commit them first — a branch with no commits can't be reviewed at all. If they commit, recapture the Step 2 lists so the audits share the new scope. If they decline, continue and record the unreviewed changes as a gap for the report.
 
-Look in this conversation for a completed `/code-review` run against this branch. If you don't find one, ask the user whether they've run it. On **no**, invoke the `code-review` skill with `$BASE` as the fixed point and let it finish before continuing.
+Look in this conversation for a completed `/code-review` run covering the current `$BASE` and `HEAD`. If you don't find one, ask the user whether they've run it since the latest commit. On **no**, or when the run predates `HEAD`, invoke the `code-review` skill with `$BASE` as the fixed point and let it finish before continuing.
 
 Record the outcome: its hard violations (documented-standard breaches and spec gaps) and whether each is resolved. When the run isn't visible in this conversation, ask the user.
 
@@ -54,7 +54,7 @@ Issue both sub-agent calls together, in the foreground. Give each the `BASE` SHA
 
 Brief:
 
-> Invoke the `laravel-best-practices` skill and apply it to every changed or untracked PHP and Blade file (`git diff $BASE -- <file>` for the hunks; read the whole file when context demands). Read only the rule files relevant to the changed surface. Read the project's `CLAUDE.md` / `AGENTS.md` first: a documented project convention overrides a generic rule and is never a finding. Work **consistency-first** — before flagging "should use X", check what sibling files already do; inconsistency with the codebase is worse than a suboptimal pattern. Skip anything Pint or Larastan already enforces.
+> Invoke the `laravel-best-practices` skill and apply it to every changed or untracked PHP and Blade file (hunks from both `git diff $BASE -- <file>` and `git diff --cached $BASE -- <file>`; read untracked files whole, and any file whole when context demands). Read only the rule files relevant to the changed surface. Read the project's `CLAUDE.md` / `AGENTS.md` first: a documented project convention overrides a generic rule and is never a finding. Work **consistency-first** — before flagging "should use X", check what sibling files already do; inconsistency with the codebase is worse than a suboptimal pattern. Skip anything Pint or Larastan already enforces.
 >
 > For each finding give: severity (🔴 must-fix / 🟠 should-fix / 🟡 nit), `path:line`, the issue in one sentence, and a concrete fix. Group by severity. Under 500 words.
 
