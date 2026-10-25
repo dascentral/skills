@@ -10,13 +10,7 @@ I'm tracking or using the following skills in my daily workflows.
 
 #### mattpocock/skills
 
-[Matt Pocock](https://x.com/mattpocockuk?lang=en) teaches developers for a living and produced a set of skills available at [mattpocock/skills](https://github.com/mattpocock/skills). Documentation for these skills can be found on his [aihero.dev](https://www.aihero.dev/skills) website.
-
-I am primarily using Claude Code, so I install these skills as a Claude Code plugin.
-
-```bash
-claude plugins install mattpocock-skills
-```
+[Matt Pocock](https://x.com/mattpocockuk?lang=en) teaches developers for a living and has produced a set of skills available at [mattpocock/skills](https://github.com/mattpocock/skills). Documentation for these skills is available on his [aihero.dev](https://www.aihero.dev/skills) website.
 
 My development workflow leans heavily on these skills:
 
@@ -36,6 +30,10 @@ Other skills from this batch that I would highlight:
 ### addyosmani/agent-skills
 
 [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills): Production-grade engineering skills for AI coding agents from [Addy Osmani](https://addyosmani.com/), an evangelist in the space who works at Google. I initially leveraged this set of skills in my engineering workflow, but I have since shifted to using Matt Pocock's skills.
+
+### cloudflare/security-audit-skill
+
+https://github.com/cloudflare/security-audit-skill: A coding-agent skill from Cloudflare that turns your agent into a security auditor. It orchestrates isolated agents through reconnaissance, coverage-led hunting, candidate validation, structured output, independent record verification, and target-neutral reporting.
 
 ### Visual Design
 
