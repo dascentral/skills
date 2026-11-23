@@ -40,7 +40,7 @@ If all three are empty, report that there is nothing to finalize and stop. Done 
 
 `/code-review` reviews commits only (`$BASE...HEAD`). If Step 2 found staged, unstaged, or untracked changes, ask the user to commit them first — a branch with no commits can't be reviewed at all. If they commit, recapture the Step 2 lists so the audits share the new scope. If they decline, continue and record the unreviewed changes as a gap for the report.
 
-Look in this conversation for a completed `/code-review` run covering the current `$BASE` and `HEAD`. If you don't find one, ask the user whether they've run it since the latest commit. On **no**, or when the run predates `HEAD`, invoke the `code-review` skill with `$BASE` as the fixed point and let it finish before continuing.
+Look in this conversation for a completed `/code-review` run on this branch. If you don't find one, ask the user whether they've run it on this branch. Invoke the `code-review` skill (with `$BASE` as the fixed point, letting it finish before continuing) only when no run exists. A run from an earlier commit still counts: later commits are usually small follow-ups, and Step 4 audits the current changes regardless.
 
 Record the outcome: its hard violations (documented-standard breaches and spec gaps) and whether each is resolved. When the run isn't visible in this conversation, ask the user.
 
